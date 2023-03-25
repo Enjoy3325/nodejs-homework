@@ -2,7 +2,6 @@ const {program} = require("commander")
 
 const contactsObj = require(__dirname, "contacts.js");
 
-
 const invokeAction = async ({ action, id, name, email, phone }) => {
   switch (action) {
     case "list":
