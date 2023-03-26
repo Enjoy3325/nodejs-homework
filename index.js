@@ -1,43 +1,39 @@
-const {program} = require("commander")
+const { program } = require("commander")
 
-const contactsObj = require(__dirname, "contacts.js");
+const { listContacts,
+    getContactById,
+    addContact,
+    removeContact,
+    updateContact } = require(__dirname, "./contacts/index");
 
 const invokeAction = async ({ action, id, name, email, phone }) => {
-  switch (action) {
-    case "list":
-          const allContacts = await contactsObj.listContacts()
-          
-        break;
+    switch (action) {
+        case "list":
+            return await listContacts();
 
-    case "get":
- const oneContact =await contactsObj.getContactById(id)
-        break;
+        case "get":
+            return await getContactById(id);
 
-    case "add":
-        const newContact = await contactsObj.addContact({name, email, phone})
-        break;
+        case "add":
+            return await addContact({ name, email, phone });
 
-    case "remove":
-        const removeContact = await contactsObj.removeContact(id)
-          break;
-      
-      case "update":
-          const updateContact = await contactsObj.updateContact(id,{name, email, phone})
-          break
+        case "remove":
+            return await removeContact(id);
 
-    default:
-          console.warn("\x1B[31m Unknown action type!");
-      
-}
+        case "update":
+            return await updateContact(id, { name, email, phone });
+
+        default:
+            console.warn("\x1B[31m Unknown action type!");
+    }
 }
 program
-.option("-a, --action <type>")
-.option("-i, --id <type>")
-.option("-n, -name <type>")
-.option("-e, --email <type>")
+    .option("-a, --action <type>")
+    .option("-i, --id <type>")
+    .option("-n, -name <type>")
+    .option("-e, --email <type>")
     .option("-p, --phone <type>")
 
 program.parse()
-    const options = program.opts()
-
+const options = program.opts()
 invokeAction(options);
