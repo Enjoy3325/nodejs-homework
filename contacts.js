@@ -11,7 +11,6 @@ const listContacts = async () => {
 
 asyncHandler(listContacts());
 
-
 const addContact = async (name, email, phone) => {
     const contacts = await listContacts()
     const newContact = {
